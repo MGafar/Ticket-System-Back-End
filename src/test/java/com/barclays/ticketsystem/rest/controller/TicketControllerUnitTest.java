@@ -36,4 +36,13 @@ class TicketControllerUnitTest {
 		Mockito.verify(this.ticketService, Mockito.times(1)).readAll();
 	}
 	
+	@Test
+	void testCreate() {
+		Ticket toSave = new Ticket("Title", "Author", "Description");
+		Ticket saved = new Ticket(1L, "Title", "Author", "Description");
+		Mockito.when(this.ticketService.create(toSave)).thenReturn(saved);
+		ResponseEntity<Ticket> expected = new ResponseEntity<Ticket>(saved, HttpStatus.CREATED);
+		Assertions.assertThat(this.ticketController.create(toSave)).isEqualTo(expected);
+		Mockito.verify(this.ticketService, Mockito.times(1)).create(toSave);
+	}
 }

@@ -1,6 +1,5 @@
 package com.barclays.ticketsystem.service;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ class TicketServiceUnitTest {
 	private TicketRepository ticketRepository;
 	
 	@Test
-	void testReadAll() throws ParseException {
+	void testReadAll() {
 		
 		List<Ticket> expectedTickets = new ArrayList<>();
 		expectedTickets.add(new Ticket(1L, "Title", "Author", "Description"));
@@ -33,5 +32,14 @@ class TicketServiceUnitTest {
 		
 		Mockito.when(this.ticketRepository.findAll()).thenReturn(expectedTickets);
 		Assertions.assertThat(this.ticketService.readAll()).isEqualTo(expectedTickets);
+	}
+	
+	@Test
+	void testCreate()  {
+		Ticket toSave = new Ticket("Title", "Author", "Description");
+		Ticket saved = new Ticket(1L, "Title", "Author", "Description");
+		Mockito.when(this.ticketRepository.save(toSave)).thenReturn(saved);
+		Assertions.assertThat(this.ticketService.create(toSave)).isEqualTo(saved);
+		Mockito.verify(this.ticketRepository, Mockito.times(1)).save(toSave);
 	}
 }

@@ -21,5 +21,9 @@ public class TicketService {
 	
 	public List<Ticket> readAll() {
 		return this.ticketRepository.findAll();
+	}
+
+	public Ticket create(Ticket ticket) {
+		return this.ticketRepository.save(ticket);
 	}	
 }
