@@ -37,6 +37,15 @@ class TicketControllerUnitTest {
 	}
 	
 	@Test
+	void testReadById() {
+		Ticket expectedTicket = new Ticket(123L, "Title", "Author", "Description");
+		Mockito.when(this.ticketService.readById(123L)).thenReturn(expectedTicket);
+		ResponseEntity<Ticket> expected = new ResponseEntity<>(expectedTicket, HttpStatus.OK);
+		Assertions.assertThat(this.ticketController.readById(123L)).isEqualTo(expected);
+		Mockito.verify(this.ticketService, Mockito.times(1)).readById(123L);
+	}
+	
+	@Test
 	void testCreate() {
 		Ticket toSave = new Ticket("Title", "Author", "Description");
 		Ticket saved = new Ticket(1L, "Title", "Author", "Description");
@@ -44,5 +53,14 @@ class TicketControllerUnitTest {
 		ResponseEntity<Ticket> expected = new ResponseEntity<Ticket>(saved, HttpStatus.CREATED);
 		Assertions.assertThat(this.ticketController.create(toSave)).isEqualTo(expected);
 		Mockito.verify(this.ticketService, Mockito.times(1)).create(toSave);
+	}
+	
+	@Test
+	void testUpdate() {
+		Ticket expectedTicket = new Ticket(123L, "Title", "Author", "Description");
+		Mockito.when(this.ticketService.update(123L, expectedTicket)).thenReturn(expectedTicket);
+		ResponseEntity<Ticket> expected = new ResponseEntity<>(expectedTicket, HttpStatus.OK);
+		Assertions.assertThat(this.ticketController.update(123L, expectedTicket)).isEqualTo(expected);
+		Mockito.verify(this.ticketService, Mockito.times(1)).update(123L, expectedTicket);
 	}
 }
