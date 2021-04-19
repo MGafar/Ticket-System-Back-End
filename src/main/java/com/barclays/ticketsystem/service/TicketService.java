@@ -1,6 +1,8 @@
 package com.barclays.ticketsystem.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -43,5 +45,13 @@ public class TicketService {
 	public Ticket readById(Long id) {
 		Optional<Ticket> ticket = this.ticketRepository.findById(id);
 		return ticket.get();
+	}
+
+	public Map<String, Boolean> delete(Long id) {
+		Ticket toDelete = this.ticketRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		this.ticketRepository.delete(toDelete);
+		Map<String, Boolean> response = new HashMap<> ();
+		response.put("Deleted", Boolean.TRUE);
+		return response;
 	}
 }

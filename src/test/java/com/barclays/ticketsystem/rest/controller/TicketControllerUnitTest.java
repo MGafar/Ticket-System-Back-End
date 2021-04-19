@@ -1,7 +1,9 @@
 package com.barclays.ticketsystem.rest.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -62,5 +64,15 @@ class TicketControllerUnitTest {
 		ResponseEntity<Ticket> expected = new ResponseEntity<>(expectedTicket, HttpStatus.OK);
 		Assertions.assertThat(this.ticketController.update(123L, expectedTicket)).isEqualTo(expected);
 		Mockito.verify(this.ticketService, Mockito.times(1)).update(123L, expectedTicket);
+	}
+	
+	@Test
+	void testDelete() {
+		Map<String, Boolean> response = new HashMap<> ();
+		response.put("Deleted", Boolean.TRUE);
+		Mockito.when(this.ticketService.delete(123L)).thenReturn(response);
+		ResponseEntity<Map<String, Boolean>> expected = new ResponseEntity<>(response, HttpStatus.OK);
+		Assertions.assertThat(this.ticketController.delete(123L)).isEqualTo(expected);
+		Mockito.verify(this.ticketService, Mockito.times(1)).delete(123L);
 	}
 }

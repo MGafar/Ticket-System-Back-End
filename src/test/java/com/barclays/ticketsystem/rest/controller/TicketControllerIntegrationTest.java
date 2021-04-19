@@ -1,6 +1,7 @@
 package com.barclays.ticketsystem.rest.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -62,5 +63,12 @@ class TicketControllerIntegrationTest {
 				.andExpect(content().string(containsString("UpdatedTitle")))
 				.andExpect(content().string(containsString("UpdatedAuthor")))
 				.andExpect(content().string(containsString("UpdatedDescription")));
+	}
+	
+	@Test
+	void testDelete() throws JsonProcessingException, Exception {
+		this.mvc.perform(delete("/ticket/delete/1"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Deleted")));
 	}
 }

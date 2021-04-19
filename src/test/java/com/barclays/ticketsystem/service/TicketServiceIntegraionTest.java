@@ -2,17 +2,22 @@ package com.barclays.ticketsystem.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.barclays.ticketsystem.persistence.domain.Ticket;
 import com.barclays.ticketsystem.persistence.repository.TicketRepository;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@Transactional
 class TicketServiceIntegraionTest {
 
 	@Autowired
@@ -46,11 +51,20 @@ class TicketServiceIntegraionTest {
 	}
 	
 	@Test
+	@Rollback
 	void testUpdate() {
 		Ticket ticket = new Ticket(1L, "Title", "Author", "Description");
 		this.ticketRepository.save(ticket);
 		Ticket newVals = new Ticket(1L, "New Title", "New Author", "New Description");
 		this.ticketService.update(1L, newVals);
 		assertThat(this.ticketService.readById(1L)).isEqualTo(newVals);
+	}
+	
+	@Test
+	@Rollback
+	void testDelete() {
+		Map<String, Boolean> response = new HashMap<> ();
+		response.put("Deleted", Boolean.TRUE);
+		assertThat(this.ticketService.delete(1L)).isEqualTo(response);
 	}
 }
