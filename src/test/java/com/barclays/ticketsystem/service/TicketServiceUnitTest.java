@@ -1,7 +1,9 @@
 package com.barclays.ticketsystem.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
@@ -58,5 +60,14 @@ class TicketServiceUnitTest {
 		Mockito.when(this.ticketRepository.save(newVals)).thenReturn(newVals);
 		Assertions.assertThat(this.ticketService.update(1L, newVals)).isEqualTo(newVals);
 		Mockito.verify(this.ticketRepository, Mockito.times(1)).save(newVals);
+	}
+	
+	@Test
+	void testDelete() {
+		Optional<Ticket> expectedTicket = Optional.of(new Ticket(1L, "Title", "Author", "Description"));
+		Mockito.when(this.ticketRepository.findById(1L)).thenReturn(expectedTicket);
+		Map<String, Boolean> response = new HashMap<> ();
+		response.put("Deleted", Boolean.TRUE);
+		Assertions.assertThat(this.ticketService.delete(1L)).isEqualTo(response);
 	}
 }

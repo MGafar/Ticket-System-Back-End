@@ -1,10 +1,12 @@
 package com.barclays.ticketsystem.rest.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,5 +48,10 @@ public class TicketController  {
 	@PostMapping("/create")
 	public ResponseEntity<Ticket> create(@RequestBody Ticket ticket) {
 		return new ResponseEntity<>(this.ticketService.create(ticket), HttpStatus.CREATED);
-	} 
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Map<String, Boolean>> delete(@PathVariable Long id){
+		return ResponseEntity.ok(this.ticketService.delete(id));
+	}
 }
