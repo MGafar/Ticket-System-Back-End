@@ -1,6 +1,9 @@
 package com.barclays.ticketsystem.service;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +28,20 @@ public class TicketService {
 
 	public Ticket create(Ticket ticket) {
 		return this.ticketRepository.save(ticket);
-	}	
+	}
+	
+	public Ticket update(Long id, Ticket updatedValues) {
+		Ticket toUpdate = this.ticketRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		
+		toUpdate.setAuthor(updatedValues.getAuthor());
+		toUpdate.setTitle(updatedValues.getTitle());
+		toUpdate.setDescription(updatedValues.getDescription());
+		
+		return this.ticketRepository.save(toUpdate);
+	}
+
+	public Ticket readById(Long id) {
+		Optional<Ticket> ticket = this.ticketRepository.findById(id);
+		return ticket.get();
+	}
 }

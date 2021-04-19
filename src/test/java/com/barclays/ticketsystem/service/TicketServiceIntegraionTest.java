@@ -32,9 +32,25 @@ class TicketServiceIntegraionTest {
 	}
 	
 	@Test
+	void testReadByID() {
+		Ticket ticket = new Ticket(1L, "Title", "Author", "Description");		
+		this.ticketRepository.save(ticket);
+		assertThat(this.ticketService.readById(1L)).isEqualTo(ticket);
+	}
+	
+	@Test
 	void testCreate() {
 		Ticket ticket = new Ticket(1L, "Title", "Author", "Description");
 		this.ticketRepository.save(ticket);
 		assertThat(this.ticketService.create(ticket)).isEqualTo(ticket);
+	}
+	
+	@Test
+	void testUpdate() {
+		Ticket ticket = new Ticket(1L, "Title", "Author", "Description");
+		this.ticketRepository.save(ticket);
+		Ticket newVals = new Ticket(1L, "New Title", "New Author", "New Description");
+		this.ticketService.update(1L, newVals);
+		assertThat(this.ticketService.readById(1L)).isEqualTo(newVals);
 	}
 }

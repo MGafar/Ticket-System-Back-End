@@ -38,20 +38,46 @@ class TicketTest {
 	}
 
 	@Test
-	void testTicketEqualsAndHashcodeOverride() {
-		Ticket testTicket1 = new Ticket(1L, "Title", "Author", "Description");
-		Ticket testTicket2 = new Ticket(1L, "Title", "Author", "Description");
-		Ticket testTicket3 = new Ticket(2L, "Title", "Author", "Description");
+	void testTicketEqualsOverride() {
+		Ticket testTicket = new Ticket(1L, "Title", "Author", "Description");
 
-		Assertions.assertThat(testTicket1)
-			.isEqualTo(testTicket1)
-			.isEqualTo(testTicket2)
+		Assertions.assertThat(new Ticket(1L, null, null, null))
+			.isEqualTo(new Ticket(1L, null, null, null))
 			.isNotEqualTo(null)
 			.isNotEqualTo(123)
-			.isNotEqualTo(testTicket3);
-				
+			.isNotEqualTo(new Ticket(1L, "Title", null, null))
+			.isNotEqualTo(new Ticket(1L, null, "Author", null))
+			.isNotEqualTo(new Ticket(1L, null, null, "Description"));
+		
+		Assertions.assertThat(testTicket)
+			.isEqualTo(testTicket)
+			.isEqualTo(new Ticket(1L, "Title", "Author", "Description"))
+			.isNotEqualTo(new Ticket(1L, null, null, null))
+			.isNotEqualTo(new Ticket(1L, "Title", null, null))
+			.isNotEqualTo(new Ticket(1L, null, "Author", null))
+			.isNotEqualTo(new Ticket(1L, null, null, "Description"))
+			.isNotEqualTo(new Ticket(1L, "Title", "Author", null))
+			.isNotEqualTo(new Ticket(1L, null, "Author", "Description"))
+			.isNotEqualTo(new Ticket(2L, "Title", "Author", "Description"))
+			.isNotEqualTo(new Ticket(1L, "WrongTitle", "Author", "Description"))
+			.isNotEqualTo(new Ticket(1L, "Title", "WrongAuthor", "Description"))
+			.isNotEqualTo(new Ticket(1L, "Title", "Author", "WrongDescription"));
+	}
+
+	@Test
+	void testTicketHashcodeOverride() {
+		Ticket testTicket1 = new Ticket(1L, "Title", "Author", "Description");
+		Ticket testTicket2 = testTicket1;
+		Ticket testTicket3 = new Ticket(2L, "Title", "Author", "Description");
+		Ticket testTicket4 = new Ticket(1L, null, "Author", "Description");
+		Ticket testTicket5 = new Ticket(1L, "Title", null, "Description");
+		Ticket testTicket6 = new Ticket(1L, "Title", "Author", null);
+		
 		Assertions.assertThat(testTicket1.hashCode())
 			.isEqualTo(testTicket2.hashCode())
-			.isNotEqualTo(testTicket3.hashCode());
+			.isNotEqualTo(testTicket3.hashCode())
+			.isNotEqualTo(testTicket4.hashCode())
+			.isNotEqualTo(testTicket5.hashCode())
+			.isNotEqualTo(testTicket6.hashCode());
 	}
 }
