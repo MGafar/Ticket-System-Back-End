@@ -34,6 +34,11 @@ public class TicketController  {
 	public ResponseEntity<List<Ticket>> readAll() {
 		return ResponseEntity.ok(this.ticketService.readAll());
 	}
+
+	@GetMapping("/readByDepartment/{id}")
+	public ResponseEntity<List<Ticket>> readByDepartment(@PathVariable Long id) {
+		return ResponseEntity.ok(this.ticketService.readByDepartment(id));
+	}
 	
 	@GetMapping("/readById/{id}")
 	public ResponseEntity<Ticket> readById(@PathVariable Long id) {

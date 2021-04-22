@@ -11,15 +11,15 @@ class TicketTest {
 
 	@Test
 	void testTicketConstructor() {
-		Ticket testTicket = new Ticket("Title", "Author", "Description");
-		testTicket.setId(1L);
-		String expectedString = "Ticket [id: 1 title: Title author: Author description: Description]";
+		Ticket testTicket = new Ticket(1L, "Title", "Author", "Description");
+		String expectedString = "Ticket [id: 1 title: Title author: Author description: Description department: null]";
 		Assertions.assertThat(testTicket.toString()).isEqualTo(expectedString);
 	}
 	
 	@Test
 	void testGettersAndSetter() {
 		Ticket testTicket = new Ticket();
+		Department testDepartment = new Department(1L, "FX");
 		
 		testTicket.setId(1L);
 		testTicket.setTitle("Title");
@@ -27,6 +27,7 @@ class TicketTest {
 		testTicket.setDescription("Description");
 		testTicket.setTimeCreated(new Date (123456789L));
 		testTicket.setTimeUpdated(new Date (987654321L));
+		testTicket.setDepartment(testDepartment);
 		
 		Assertions.assertThat(testTicket)
 			.returns(1L, from(Ticket::getId))
@@ -34,34 +35,40 @@ class TicketTest {
 			.returns("Author", from(Ticket::getAuthor))
 			.returns("Description", from(Ticket::getDescription))
 			.returns(new Date (123456789L), from(Ticket::getTimeCreated))
-			.returns(new Date (987654321L), from(Ticket::getTimeUpdated));
+			.returns(new Date (987654321L), from(Ticket::getTimeUpdated))
+			.returns(testDepartment, from(Ticket::getDepartment));
 	}
 
 	@Test
 	void testTicketEqualsOverride() {
-		Ticket testTicket = new Ticket(1L, "Title", "Author", "Description");
+		Department testDepartment = new Department(1L, "FX");
+		Ticket testTicket = new Ticket(1L, "Title", "Author", "Description", testDepartment);
 
-		Assertions.assertThat(new Ticket(1L, null, null, null))
-			.isEqualTo(new Ticket(1L, null, null, null))
+		Assertions.assertThat(new Ticket(1L, null, null, null, null))
+			.isEqualTo(new Ticket(1L, null, null, null, null))
 			.isNotEqualTo(null)
 			.isNotEqualTo(123)
-			.isNotEqualTo(new Ticket(1L, "Title", null, null))
-			.isNotEqualTo(new Ticket(1L, null, "Author", null))
-			.isNotEqualTo(new Ticket(1L, null, null, "Description"));
+			.isNotEqualTo(new Ticket(1L, "Title", null, null, null))
+			.isNotEqualTo(new Ticket(1L, null, "Author", null, null))
+			.isNotEqualTo(new Ticket(1L, null, null, "Description", null))
+			.isNotEqualTo(new Ticket(1L, null, null, null, testDepartment));
 		
 		Assertions.assertThat(testTicket)
 			.isEqualTo(testTicket)
-			.isEqualTo(new Ticket(1L, "Title", "Author", "Description"))
-			.isNotEqualTo(new Ticket(1L, null, null, null))
-			.isNotEqualTo(new Ticket(1L, "Title", null, null))
-			.isNotEqualTo(new Ticket(1L, null, "Author", null))
-			.isNotEqualTo(new Ticket(1L, null, null, "Description"))
-			.isNotEqualTo(new Ticket(1L, "Title", "Author", null))
-			.isNotEqualTo(new Ticket(1L, null, "Author", "Description"))
-			.isNotEqualTo(new Ticket(2L, "Title", "Author", "Description"))
-			.isNotEqualTo(new Ticket(1L, "WrongTitle", "Author", "Description"))
-			.isNotEqualTo(new Ticket(1L, "Title", "WrongAuthor", "Description"))
-			.isNotEqualTo(new Ticket(1L, "Title", "Author", "WrongDescription"));
+			.isEqualTo(new Ticket(1L, "Title", "Author", "Description", testDepartment))
+			.isNotEqualTo(new Ticket(1L, null, null, null, null))
+			.isNotEqualTo(new Ticket(1L, "Title", null, null, null))
+			.isNotEqualTo(new Ticket(1L, null, "Author", null, null))
+			.isNotEqualTo(new Ticket(1L, null, null, "Description", null))
+			.isNotEqualTo(new Ticket(1L, null, null, null, testDepartment))
+			.isNotEqualTo(new Ticket(1L, "Title", "Author", null, testDepartment))
+			.isNotEqualTo(new Ticket(1L, null, "Author", "Description", testDepartment))
+			.isNotEqualTo(new Ticket(2L, "Title", "Author", "Description", testDepartment))
+			.isNotEqualTo(new Ticket(1L, "WrongTitle", "Author", "Description", testDepartment))
+			.isNotEqualTo(new Ticket(1L, "Title", "WrongAuthor", "Description", testDepartment))
+			.isNotEqualTo(new Ticket(1L, "Title", "Author", "WrongDescription", testDepartment))
+			.isNotEqualTo(new Ticket(1L, "Title", "Author", "WrongDescription", new Department(2L, "Credit")))
+			;
 	}
 
 	@Test

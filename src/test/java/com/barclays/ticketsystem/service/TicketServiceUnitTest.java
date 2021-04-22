@@ -42,6 +42,15 @@ class TicketServiceUnitTest {
 		Mockito.when(this.ticketRepository.findById(1L)).thenReturn(expectedTicket);
 		Assertions.assertThat(this.ticketService.readById(1L)).isEqualTo(expectedTicket.get());
 	}
+
+	@Test
+	void testReadByDepartment() {
+		List<Ticket> expectedTickets = new ArrayList<>();
+		expectedTickets.add(new Ticket(1L, "Title", "Author", "Description"));
+		expectedTickets.add(new Ticket(2L, "Title2", "Author2", "Description2"));
+		Mockito.when(this.ticketRepository.findByDepartment(1L)).thenReturn(expectedTickets);
+		Assertions.assertThat(this.ticketService.readByDepartment(1L)).isEqualTo(expectedTickets);
+	}
 	
 	@Test
 	void testCreate()  {

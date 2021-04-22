@@ -28,6 +28,10 @@ public class TicketService {
 		return this.ticketRepository.findAll();
 	}
 
+	public List<Ticket> readByDepartment(Long id) {
+		return this.ticketRepository.findByDepartment(id);
+	}
+	
 	public Ticket create(Ticket ticket) {
 		return this.ticketRepository.save(ticket);
 	}
@@ -38,6 +42,7 @@ public class TicketService {
 		toUpdate.setAuthor(updatedValues.getAuthor());
 		toUpdate.setTitle(updatedValues.getTitle());
 		toUpdate.setDescription(updatedValues.getDescription());
+		toUpdate.setDepartment(updatedValues.getDepartment());
 		
 		return this.ticketRepository.save(toUpdate);
 	}

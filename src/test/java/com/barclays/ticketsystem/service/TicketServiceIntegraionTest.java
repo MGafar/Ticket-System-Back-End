@@ -13,7 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.barclays.ticketsystem.persistence.domain.Department;
 import com.barclays.ticketsystem.persistence.domain.Ticket;
+import com.barclays.ticketsystem.persistence.repository.DepartmentRepository;
 import com.barclays.ticketsystem.persistence.repository.TicketRepository;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -22,6 +24,9 @@ class TicketServiceIntegraionTest {
 
 	@Autowired
 	private TicketService ticketService;
+	
+	@Autowired
+	private DepartmentRepository departmentRepository;
 	
 	@Autowired
 	private TicketRepository ticketRepository;
@@ -41,6 +46,17 @@ class TicketServiceIntegraionTest {
 		Ticket ticket = new Ticket(1L, "Title", "Author", "Description");		
 		this.ticketRepository.save(ticket);
 		assertThat(this.ticketService.readById(1L)).isEqualTo(ticket);
+	}
+	
+	@Test
+	void testReadByDepartment() {
+		Department fx = new Department(1L, "FX");
+		Ticket expectedTicket = new Ticket(2L, "Title2", "Author2", "Description2", fx);
+		List<Ticket> toSave = List.of(expectedTicket);
+		
+		this.departmentRepository.save(fx);
+		this.ticketRepository.saveAll(toSave);
+		assertThat(this.ticketService.readByDepartment(1L)).isEqualTo(toSave);
 	}
 	
 	@Test
