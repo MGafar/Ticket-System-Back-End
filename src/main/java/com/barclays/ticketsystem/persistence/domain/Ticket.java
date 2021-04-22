@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,15 +28,18 @@ public class Ticket {
 	@Column
 	private long id;
 	
-	@Column (nullable = false)
+	@Column
 	private String title;
 	
-	@Column (nullable = false)
+	@Column
 	private String author;
 	
 	@Column
 	private String description;
 	
+	@Column
+	private String solution;
+
 	@Column (updatable = false, nullable = false)
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -43,33 +48,24 @@ public class Ticket {
 	@Column (nullable = false)
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    private Date timeUpdated;	
+    private Date timeUpdated;
 	
+	@Column
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Department department;
 	
-	public Ticket(long id, String title, String author, String description, Department department) {
+	public Ticket(long id, String title, String author, String description, String solution, Status status,	Department department) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.description = description;
+		this.solution = solution;
+		this.status = status;
 		this.department = department;
-	}
-    
-	public Ticket(long id, String title, String author, String description) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.author = author;
-		this.description = description;
-	}
-
-	public Ticket(String title, String author, String description) {
-		super();
-		this.title = title;
-		this.author = author;
-		this.description = description;
 	}
 
 	public Ticket() {
@@ -83,6 +79,8 @@ public class Ticket {
 					.append(" author: " + author)
 					.append(" description: " + description)
 					.append(" department: " + department)
+					.append(" solution: " + solution)
+					.append(" status: " + status)
 					.append("]")
 					.toString();
 	}
@@ -94,6 +92,8 @@ public class Ticket {
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((solution == null) ? 0 : solution.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -119,15 +119,17 @@ public class Ticket {
 			return false;
 		if (id != other.id)
 			return false;
+		if (solution == null) {
+			if (other.solution != null)
+				return false;
+		} else if (!solution.equals(other.solution))
+			return false;
+		if (status != other.status)
+			return false;
 		if (title == null) {
 			if (other.title != null)
 				return false;
 		} else if (!title.equals(other.title))
-			return false;
-		if (department == null) {
-			if (other.department != null)
-				return false;
-		} else if (!department.equals(other.department))
 			return false;
 		return true;
 	}
@@ -179,5 +181,21 @@ public class Ticket {
 
 	public void setDepartment(Department department) {
 		this.department = department;
+	}
+	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	
+	public String getSolution() {
+		return solution;
+	}
+
+	public void setSolution(String solution) {
+		this.solution = solution;
 	}
 }

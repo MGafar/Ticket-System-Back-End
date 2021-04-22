@@ -40,6 +40,11 @@ public class TicketController  {
 		return ResponseEntity.ok(this.ticketService.readByDepartment(id));
 	}
 	
+	@PutMapping("/markAsInProgress/{id}")
+	public ResponseEntity<Map<String, Boolean>> markAsInProgress(@PathVariable Long id) {
+		return ResponseEntity.ok(this.ticketService.markAsInProgress(id));
+	}
+	
 	@GetMapping("/readById/{id}")
 	public ResponseEntity<Ticket> readById(@PathVariable Long id) {
 		return ResponseEntity.ok(this.ticketService.readById(id));

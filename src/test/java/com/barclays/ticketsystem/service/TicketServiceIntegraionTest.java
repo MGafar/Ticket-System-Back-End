@@ -14,6 +14,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.barclays.ticketsystem.persistence.domain.Department;
+import com.barclays.ticketsystem.persistence.domain.Status;
 import com.barclays.ticketsystem.persistence.domain.Ticket;
 import com.barclays.ticketsystem.persistence.repository.DepartmentRepository;
 import com.barclays.ticketsystem.persistence.repository.TicketRepository;
@@ -33,8 +34,8 @@ class TicketServiceIntegraionTest {
 		
 	@Test
 	void testReadAll() {
-		Ticket ticket1 = new Ticket(1L, "Title", "Author", "Description");
-		Ticket ticket2 = new Ticket(2L, "Title2", "Author2", "Description2");
+		Ticket ticket1 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
+		Ticket ticket2 = new Ticket(2L, "Title", "Author", "Description", "Solution", Status.DONE, null);
 		List<Ticket> toSave = List.of(ticket1, ticket2);	
 		
 		this.ticketRepository.saveAll(toSave);
@@ -43,7 +44,7 @@ class TicketServiceIntegraionTest {
 	
 	@Test
 	void testReadByID() {
-		Ticket ticket = new Ticket(1L, "Title", "Author", "Description");		
+		Ticket ticket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);	
 		this.ticketRepository.save(ticket);
 		assertThat(this.ticketService.readById(1L)).isEqualTo(ticket);
 	}
@@ -51,7 +52,7 @@ class TicketServiceIntegraionTest {
 	@Test
 	void testReadByDepartment() {
 		Department fx = new Department(1L, "FX");
-		Ticket expectedTicket = new Ticket(2L, "Title2", "Author2", "Description2", fx);
+		Ticket expectedTicket = new Ticket(2L, "Title", "Author", "Description", "Solution", Status.DONE, fx);;
 		List<Ticket> toSave = List.of(expectedTicket);
 		
 		this.departmentRepository.save(fx);
@@ -61,7 +62,7 @@ class TicketServiceIntegraionTest {
 	
 	@Test
 	void testCreate() {
-		Ticket ticket = new Ticket(1L, "Title", "Author", "Description");
+		Ticket ticket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
 		this.ticketRepository.save(ticket);
 		assertThat(this.ticketService.create(ticket)).isEqualTo(ticket);
 	}
@@ -69,9 +70,9 @@ class TicketServiceIntegraionTest {
 	@Test
 	@Rollback
 	void testUpdate() {
-		Ticket ticket = new Ticket(1L, "Title", "Author", "Description");
+		Ticket ticket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
 		this.ticketRepository.save(ticket);
-		Ticket newVals = new Ticket(1L, "New Title", "New Author", "New Description");
+		Ticket newVals = new Ticket(1L, "New Title", "New Author", "New Description", "New Solution", Status.OPEN, null);
 		this.ticketService.update(1L, newVals);
 		assertThat(this.ticketService.readById(1L)).isEqualTo(newVals);
 	}
@@ -82,5 +83,13 @@ class TicketServiceIntegraionTest {
 		Map<String, Boolean> response = new HashMap<> ();
 		response.put("Deleted", Boolean.TRUE);
 		assertThat(this.ticketService.delete(1L)).isEqualTo(response);
+	}
+	
+	@Test
+	@Rollback
+	void testMarkAsInProgress() {
+		Map<String, Boolean> response = new HashMap<> ();
+		response.put("InProgress", Boolean.TRUE);
+		assertThat(this.ticketService.markAsInProgress(1L)).isEqualTo(response);
 	}
 }

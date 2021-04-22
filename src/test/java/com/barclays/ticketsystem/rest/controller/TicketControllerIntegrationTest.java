@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.barclays.ticketsystem.persistence.domain.Status;
 import com.barclays.ticketsystem.persistence.domain.Ticket;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +35,7 @@ class TicketControllerIntegrationTest {
 	
 	@Test
 	void testCreate() throws JsonProcessingException, Exception {
-		Ticket ticket = new Ticket("SampleTitle", "SampleAuthor", "SampleDescription");
+		Ticket ticket = new Ticket(1L, "SampleTitle", "SampleAuthor", "SampleDescription", "SampleSolution", Status.OPEN, null);
 		
 		this.mvc.perform(post("/ticket/create").accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON).content(this.jsonConverter.writeValueAsString(ticket)))
@@ -87,7 +88,7 @@ class TicketControllerIntegrationTest {
 	
 	@Test
 	void testUpdate() throws JsonProcessingException, Exception {
-		Ticket ticket = new Ticket("UpdatedTitle", "UpdatedAuthor", "UpdatedDescription");
+		Ticket ticket = new Ticket(1L, "UpdatedTitle", "UpdatedAuthor", "UpdatedDescription", "UpdatedSolution", Status.OPEN, null);
 		
 		this.mvc.perform(put("/ticket/update/1").accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON).content(this.jsonConverter.writeValueAsString(ticket)))
@@ -103,4 +104,11 @@ class TicketControllerIntegrationTest {
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString("Deleted")));
 	}
+	
+	@Test
+	void testMarkAsInProgress() throws JsonProcessingException, Exception {
+		this.mvc.perform(put("/ticket/markAsInProgress/1"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("InProgress")));
+	}	
 }
