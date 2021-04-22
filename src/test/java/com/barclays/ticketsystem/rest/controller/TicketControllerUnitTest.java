@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.barclays.ticketsystem.persistence.domain.Department;
 import com.barclays.ticketsystem.persistence.domain.Ticket;
 import com.barclays.ticketsystem.service.TicketService;
 
@@ -45,6 +46,18 @@ class TicketControllerUnitTest {
 		ResponseEntity<Ticket> expected = new ResponseEntity<>(expectedTicket, HttpStatus.OK);
 		Assertions.assertThat(this.ticketController.readById(123L)).isEqualTo(expected);
 		Mockito.verify(this.ticketService, Mockito.times(1)).readById(123L);
+	}
+
+	@Test
+	void testReadByDepartment() {
+		List<Ticket> expectedTickets = new ArrayList<>();
+		Department department = new Department(1L, "FX");
+		expectedTickets.add(new Ticket(1L, "Title", "Author", "Description", department));
+		expectedTickets.add(new Ticket(2L, "Title2", "Author2", "Description2", department));
+		Mockito.when(this.ticketService.readByDepartment(1L)).thenReturn(expectedTickets);
+		ResponseEntity<List<Ticket>> expected = new ResponseEntity<>(expectedTickets, HttpStatus.OK);
+		Assertions.assertThat(this.ticketController.readByDepartment(1L)).isEqualTo(expected);
+		Mockito.verify(this.ticketService, Mockito.times(1)).readByDepartment(1L);
 	}
 	
 	@Test

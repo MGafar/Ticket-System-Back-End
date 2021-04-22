@@ -43,6 +43,20 @@ class TicketControllerIntegrationTest {
 				.andExpect(content().string(containsString("SampleAuthor")))
 				.andExpect(content().string(containsString("SampleDescription")));
 	}
+
+	@Test
+	void testReadAll()  throws JsonProcessingException, Exception {
+		this.mvc.perform(get("/ticket/readAll"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("VDI Issues")))
+				.andExpect(content().string(containsString("Muhamad Gafar")))
+				.andExpect(content().string(containsString("The VDI has decided to stop working again")))
+				.andExpect(content().string(containsString("FX")))
+				.andExpect(content().string(containsString("Symphony problems")))
+				.andExpect(content().string(containsString("Not Muhamad Gafar")))
+				.andExpect(content().string(containsString("My Symphony has stopped receiving messages")))
+				.andExpect(content().string(containsString("Credit")));
+	}
 	
 	@Test
 	void testReadById()  throws JsonProcessingException, Exception {
@@ -50,7 +64,25 @@ class TicketControllerIntegrationTest {
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString("VDI Issues")))
 				.andExpect(content().string(containsString("Muhamad Gafar")))
-				.andExpect(content().string(containsString("The VDI has decided to stop working again fml")));
+				.andExpect(content().string(containsString("The VDI has decided to stop working again")))
+				.andExpect(content().string(containsString("FX")));
+	}
+
+	@Test
+	void testReadByDepartment()  throws JsonProcessingException, Exception {
+		this.mvc.perform(get("/ticket/readByDepartment/1"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("VDI Issues")))
+				.andExpect(content().string(containsString("Muhamad Gafar")))
+				.andExpect(content().string(containsString("The VDI has decided to stop working again")))
+				.andExpect(content().string(containsString("FX")));
+	
+		this.mvc.perform(get("/ticket/readByDepartment/2"))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString("Symphony problems")))
+				.andExpect(content().string(containsString("Not Muhamad Gafar")))
+				.andExpect(content().string(containsString("My Symphony has stopped receiving messages")))
+				.andExpect(content().string(containsString("Credit")));
 	}
 	
 	@Test

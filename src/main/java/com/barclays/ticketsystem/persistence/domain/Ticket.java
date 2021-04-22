@@ -4,9 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -43,6 +45,18 @@ public class Ticket {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeUpdated;	
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Department department;
+	
+	public Ticket(long id, String title, String author, String description, Department department) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.author = author;
+		this.description = description;
+		this.department = department;
+	}
+    
 	public Ticket(long id, String title, String author, String description) {
 		super();
 		this.id = id;
@@ -67,7 +81,8 @@ public class Ticket {
 					.append("id: " + id)
 					.append(" title: " + title)
 					.append(" author: " + author)
-					.append(" description: " + description)					
+					.append(" description: " + description)
+					.append(" department: " + department)
 					.append("]")
 					.toString();
 	}
@@ -109,9 +124,14 @@ public class Ticket {
 				return false;
 		} else if (!title.equals(other.title))
 			return false;
+		if (department == null) {
+			if (other.department != null)
+				return false;
+		} else if (!department.equals(other.department))
+			return false;
 		return true;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -151,5 +171,13 @@ public class Ticket {
 	
 	public void setTimeCreated(Date timeCreated) {
 		this.timeCreated = timeCreated;
+	}
+	
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 }
