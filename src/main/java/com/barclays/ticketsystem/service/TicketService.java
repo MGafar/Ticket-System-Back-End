@@ -43,6 +43,8 @@ public class TicketService {
 		toUpdate.setTitle(updatedValues.getTitle());
 		toUpdate.setDescription(updatedValues.getDescription());
 		toUpdate.setDepartment(updatedValues.getDepartment());
+		toUpdate.setStatus(updatedValues.getStatus());
+		toUpdate.setSolution(updatedValues.getSolution());
 		
 		return this.ticketRepository.save(toUpdate);
 	}
@@ -57,6 +59,13 @@ public class TicketService {
 		this.ticketRepository.delete(toDelete);
 		Map<String, Boolean> response = new HashMap<> ();
 		response.put("Deleted", Boolean.TRUE);
+		return response;
+	}
+
+	public Map<String, Boolean> markAsInProgress(Long id) {
+		this.ticketRepository.markAsInProgress(id);
+		Map<String, Boolean> response = new HashMap<> ();
+		response.put("InProgress", Boolean.TRUE);
 		return response;
 	}
 }
