@@ -30,8 +30,8 @@ class TicketServiceUnitTest {
 	@Test
 	void testReadAll() {
 		List<Ticket> expectedTickets = new ArrayList<>();
-		expectedTickets.add(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null));
-		expectedTickets.add(new Ticket(2L, "Title2", "Author2", "Description2", "Solution2", Status.DONE, null));
+		expectedTickets.add(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null));
+		expectedTickets.add(new Ticket(2L, "Title2", "Author2", "Description2", "Solution2", Status.DONE, null, null));
 		
 		Mockito.when(this.ticketRepository.findAll()).thenReturn(expectedTickets);
 		Assertions.assertThat(this.ticketService.readAll()).isEqualTo(expectedTickets);
@@ -39,7 +39,7 @@ class TicketServiceUnitTest {
 	
 	@Test
 	void testReadById() {
-		Optional<Ticket> expectedTicket = Optional.of(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null));
+		Optional<Ticket> expectedTicket = Optional.of(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null));
 		Mockito.when(this.ticketRepository.findById(1L)).thenReturn(expectedTicket);
 		Assertions.assertThat(this.ticketService.readById(1L)).isEqualTo(expectedTicket.get());
 	}
@@ -47,16 +47,16 @@ class TicketServiceUnitTest {
 	@Test
 	void testReadByDepartment() {
 		List<Ticket> expectedTickets = new ArrayList<>();
-		expectedTickets.add(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null));
-		expectedTickets.add(new Ticket(2L, "Title2", "Author2", "Description2", "Solution2", Status.DONE, null));
+		expectedTickets.add(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null));
+		expectedTickets.add(new Ticket(2L, "Title2", "Author2", "Description2", "Solution2", Status.DONE, null, null));
 		Mockito.when(this.ticketRepository.findByDepartment(1L)).thenReturn(expectedTickets);
 		Assertions.assertThat(this.ticketService.readByDepartment(1L)).isEqualTo(expectedTickets);
 	}
 	
 	@Test
 	void testCreate()  {
-		Ticket toSave = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
-		Ticket saved = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
+		Ticket toSave = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket saved = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
 		Mockito.when(this.ticketRepository.save(toSave)).thenReturn(saved);
 		Assertions.assertThat(this.ticketService.create(toSave)).isEqualTo(saved);
 		Mockito.verify(this.ticketRepository, Mockito.times(1)).save(toSave);
@@ -64,9 +64,9 @@ class TicketServiceUnitTest {
 	
 	@Test
 	void testUpdate()  {
-		Optional<Ticket> ticket = Optional.of(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null));
+		Optional<Ticket> ticket = Optional.of(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null));
 		Mockito.when(this.ticketRepository.findById(1L)).thenReturn(ticket);
-		Ticket newVals = new Ticket(1L, "NewTitle", "NewAuthor", "NewDescription", "NewSolution", Status.OPEN, null);
+		Ticket newVals = new Ticket(1L, "NewTitle", "NewAuthor", "NewDescription", "NewSolution", Status.OPEN, null, null);
 		Mockito.when(this.ticketRepository.save(newVals)).thenReturn(newVals);
 		Assertions.assertThat(this.ticketService.update(1L, newVals)).isEqualTo(newVals);
 		Mockito.verify(this.ticketRepository, Mockito.times(1)).save(newVals);
@@ -74,7 +74,7 @@ class TicketServiceUnitTest {
 	
 	@Test
 	void testDelete() {
-		Optional<Ticket> expectedTicket = Optional.of(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null));
+		Optional<Ticket> expectedTicket = Optional.of(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null));
 		Mockito.when(this.ticketRepository.findById(1L)).thenReturn(expectedTicket);
 		Map<String, Boolean> response = new HashMap<> ();
 		response.put("Deleted", Boolean.TRUE);
@@ -83,7 +83,7 @@ class TicketServiceUnitTest {
 	
 	@Test
 	void testMarkAsInProgress() {
-		Optional<Ticket> expectedTicket = Optional.of(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.INPROGRESS, null));
+		Optional<Ticket> expectedTicket = Optional.of(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.INPROGRESS, null, null));
 		Mockito.when(this.ticketRepository.findById(1L)).thenReturn(expectedTicket);
 		Map<String, Boolean> response = new HashMap<> ();
 		response.put("InProgress", Boolean.TRUE);

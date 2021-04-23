@@ -35,7 +35,7 @@ class TicketControllerIntegrationTest {
 	
 	@Test
 	void testCreate() throws JsonProcessingException, Exception {
-		Ticket ticket = new Ticket(1L, "SampleTitle", "SampleAuthor", "SampleDescription", "SampleSolution", Status.OPEN, null);
+		Ticket ticket = new Ticket(1L, "SampleTitle", "SampleAuthor", "SampleDescription", "SampleSolution", Status.OPEN, null, null);
 		
 		this.mvc.perform(post("/ticket/create").accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON).content(this.jsonConverter.writeValueAsString(ticket)))
@@ -88,7 +88,7 @@ class TicketControllerIntegrationTest {
 	
 	@Test
 	void testUpdate() throws JsonProcessingException, Exception {
-		Ticket ticket = new Ticket(1L, "UpdatedTitle", "UpdatedAuthor", "UpdatedDescription", "UpdatedSolution", Status.OPEN, null);
+		Ticket ticket = new Ticket(1L, "UpdatedTitle", "UpdatedAuthor", "UpdatedDescription", "UpdatedSolution", Status.OPEN, null, null);
 		
 		this.mvc.perform(put("/ticket/update/1").accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON).content(this.jsonConverter.writeValueAsString(ticket)))

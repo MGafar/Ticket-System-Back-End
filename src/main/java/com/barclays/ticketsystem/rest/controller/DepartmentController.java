@@ -27,24 +27,4 @@ public class DepartmentController  {
 	public ResponseEntity<List<Department>> readAll() {
 		return ResponseEntity.ok(this.departmentService.readAll());
 	}
-	
-//	@GetMapping("/readById/{id}")
-//	public ResponseEntity<Department> readById(@PathVariable Long id) {
-//		return ResponseEntity.ok(this.departmentService.readById(id));
-//	}
-//	
-//	@PutMapping("/update/{id}")
-//	public ResponseEntity<Department> update(@PathVariable Long id, @RequestBody Department department) {
-//		return ResponseEntity.ok(this.departmentService.update(id, department));
-//	}
-//	
-//	@PostMapping("/create")
-//	public ResponseEntity<Department> create(@RequestBody Department department) {
-//		return new ResponseEntity<>(this.departmentService.create(department), HttpStatus.CREATED);
-//	}
-//	
-//	@DeleteMapping("/delete/{id}")
-//	public ResponseEntity<Map<String, Boolean>> delete(@PathVariable Long id){
-//		return ResponseEntity.ok(this.departmentService.delete(id));
-//	}
 }

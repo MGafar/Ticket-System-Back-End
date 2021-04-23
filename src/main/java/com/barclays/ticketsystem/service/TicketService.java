@@ -45,6 +45,7 @@ public class TicketService {
 		toUpdate.setDepartment(updatedValues.getDepartment());
 		toUpdate.setStatus(updatedValues.getStatus());
 		toUpdate.setSolution(updatedValues.getSolution());
+		toUpdate.setTopic(updatedValues.getTopic());
 		
 		return this.ticketRepository.save(toUpdate);
 	}
