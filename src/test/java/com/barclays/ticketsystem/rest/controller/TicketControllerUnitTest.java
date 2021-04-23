@@ -32,8 +32,8 @@ class TicketControllerUnitTest {
 	@Test
 	void testReadAll() {
 		List<Ticket> expectedTickets = new ArrayList<>();
-		expectedTickets.add(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null));
-		expectedTickets.add(new Ticket(2L, "Title2", "Author2", "Description2", "Solution2", Status.DONE, null));
+		expectedTickets.add(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null));
+		expectedTickets.add(new Ticket(2L, "Title2", "Author2", "Description2", "Solution2", Status.DONE, null, null));
 		Mockito.when(this.ticketService.readAll()).thenReturn(expectedTickets);
 		ResponseEntity<List<Ticket>> expected = new ResponseEntity<>(expectedTickets, HttpStatus.OK);
 		Assertions.assertThat(this.ticketController.readAll()).isEqualTo(expected);
@@ -42,7 +42,7 @@ class TicketControllerUnitTest {
 	
 	@Test
 	void testReadById() {
-		Ticket expectedTicket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
+		Ticket expectedTicket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
 		Mockito.when(this.ticketService.readById(123L)).thenReturn(expectedTicket);
 		ResponseEntity<Ticket> expected = new ResponseEntity<>(expectedTicket, HttpStatus.OK);
 		Assertions.assertThat(this.ticketController.readById(123L)).isEqualTo(expected);
@@ -53,8 +53,8 @@ class TicketControllerUnitTest {
 	void testReadByDepartment() {
 		List<Ticket> expectedTickets = new ArrayList<>();
 		Department department = new Department(1L, "FX");
-		expectedTickets.add(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, department));
-		expectedTickets.add(new Ticket(2L, "Title2", "Author2", "Description2", "Solution2", Status.DONE, department));
+		expectedTickets.add(new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, department, null));
+		expectedTickets.add(new Ticket(2L, "Title2", "Author2", "Description2", "Solution2", Status.DONE, department, null));
 		Mockito.when(this.ticketService.readByDepartment(1L)).thenReturn(expectedTickets);
 		ResponseEntity<List<Ticket>> expected = new ResponseEntity<>(expectedTickets, HttpStatus.OK);
 		Assertions.assertThat(this.ticketController.readByDepartment(1L)).isEqualTo(expected);
@@ -63,8 +63,8 @@ class TicketControllerUnitTest {
 	
 	@Test
 	void testCreate() {
-		Ticket toSave = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
-		Ticket saved = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
+		Ticket toSave = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket saved = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
 		Mockito.when(this.ticketService.create(toSave)).thenReturn(saved);
 		ResponseEntity<Ticket> expected = new ResponseEntity<Ticket>(saved, HttpStatus.CREATED);
 		Assertions.assertThat(this.ticketController.create(toSave)).isEqualTo(expected);
@@ -73,7 +73,7 @@ class TicketControllerUnitTest {
 	
 	@Test
 	void testUpdate() {
-		Ticket expectedTicket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
+		Ticket expectedTicket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
 		Mockito.when(this.ticketService.update(123L, expectedTicket)).thenReturn(expectedTicket);
 		ResponseEntity<Ticket> expected = new ResponseEntity<>(expectedTicket, HttpStatus.OK);
 		Assertions.assertThat(this.ticketController.update(123L, expectedTicket)).isEqualTo(expected);

@@ -18,9 +18,9 @@ class DepartmentTest {
 
 	@Test
 	void testGettersAndSetter() {
-		Ticket testTicket1 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
-		Ticket testTicket2 = new Ticket(2L, "Title2", "Author2", "Description2", "Solution2", Status.DONE, null);
-		Ticket testTicket3 = new Ticket(3L, "Title3", "Author3", "Description3", "Solution3", Status.DONE, null);
+		Ticket testTicket1 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket testTicket2 = new Ticket(2L, "Title2", "Author2", "Description2", "Solution2", Status.DONE, null, null);
+		Ticket testTicket3 = new Ticket(3L, "Title3", "Author3", "Description3", "Solution3", Status.DONE, null, null);
 		Department testDepartment = new Department();
 		
 		testDepartment.setId(1L);

@@ -11,8 +11,8 @@ class TicketTest {
 
 	@Test
 	void testTicketConstructor() {
-		Ticket testTicket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
-		String expectedString = "Ticket [id: 1 title: Title author: Author description: Description department: null solution: Solution status: DONE]";
+		Ticket testTicket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
+		String expectedString = "Ticket [id: 1 title: Title author: Author description: Description department: null solution: Solution status: DONE topic: null]";
 		Assertions.assertThat(testTicket.toString()).isEqualTo(expectedString);
 	}
 	
@@ -45,19 +45,19 @@ class TicketTest {
 
 	@Test
 	void testTicketEqualsOverride() {
-		Ticket testTicket1 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
+		Ticket testTicket1 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
 		Ticket testTicket2 = testTicket1;
-		Ticket testTicket3 = new Ticket(2L, "Title", "Author", "Description", "Solution", Status.DONE, null);
-		Ticket testTicket4 = new Ticket(1L, null, "Author", "Description", "Solution", Status.DONE, null);
-		Ticket testTicket5 = new Ticket(1L, "WrongTitle", "Author", "Description", "Solution", Status.DONE, null);
-		Ticket testTicket6 = new Ticket(1L, "Title", null, "Description", "Solution", Status.DONE, null);
-		Ticket testTicket7 = new Ticket(1L, "Title", "WrongAuthor", "Description", "Solution", Status.DONE, null);
-		Ticket testTicket8 = new Ticket(1L, "Title", "Author", null, "Solution", Status.DONE, null);
-		Ticket testTicket9 = new Ticket(1L, "Title", "Author", "WrongDescription", "Solution", Status.DONE, null);
-		Ticket testTicket10 = new Ticket(1L, "Title", "Author", "Description", null, Status.DONE, null);
-		Ticket testTicket11 = new Ticket(1L, "Title", "Author", "Description", "WrongSolution", Status.DONE, null);
-		Ticket testTicket12 = new Ticket(1L, "Title", "Author", "Description", "Solution", null, null);
-		Ticket testTicket13 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.OPEN, null);
+		Ticket testTicket3 = new Ticket(2L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket testTicket4 = new Ticket(1L, null, "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket testTicket5 = new Ticket(1L, "WrongTitle", "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket testTicket6 = new Ticket(1L, "Title", null, "Description", "Solution", Status.DONE, null, null);
+		Ticket testTicket7 = new Ticket(1L, "Title", "WrongAuthor", "Description", "Solution", Status.DONE, null, null);
+		Ticket testTicket8 = new Ticket(1L, "Title", "Author", null, "Solution", Status.DONE, null, null);
+		Ticket testTicket9 = new Ticket(1L, "Title", "Author", "WrongDescription", "Solution", Status.DONE, null, null);
+		Ticket testTicket10 = new Ticket(1L, "Title", "Author", "Description", null, Status.DONE, null, null);
+		Ticket testTicket11 = new Ticket(1L, "Title", "Author", "Description", "WrongSolution", Status.DONE, null, null);
+		Ticket testTicket12 = new Ticket(1L, "Title", "Author", "Description", "Solution", null, null, null);
+		Ticket testTicket13 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.OPEN, null, null);
 		
 		
 		Assertions.assertThat(testTicket1)
@@ -80,19 +80,19 @@ class TicketTest {
 
 	@Test
 	void testTicketHashcodeOverride() {
-		Ticket testTicket1 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
+		Ticket testTicket1 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
 		Ticket testTicket2 = testTicket1;
-		Ticket testTicket3 = new Ticket(2L, "Title", "Author", "Description", "Solution", Status.DONE, null);
-		Ticket testTicket4 = new Ticket(1L, null, "Author", "Description", "Solution", Status.DONE, null);
-		Ticket testTicket5 = new Ticket(1L, "WrongTitle", "Author", "Description", "Solution", Status.DONE, null);
-		Ticket testTicket6 = new Ticket(1L, "Title", null, "Description", "Solution", Status.DONE, null);
-		Ticket testTicket7 = new Ticket(1L, "Title", "WrongAuthor", "Description", "Solution", Status.DONE, null);
-		Ticket testTicket8 = new Ticket(1L, "Title", "Author", null, "Solution", Status.DONE, null);
-		Ticket testTicket9 = new Ticket(1L, "Title", "Author", "WrongDescription", "Solution", Status.DONE, null);
-		Ticket testTicket10 = new Ticket(1L, "Title", "Author", "Description", null, Status.DONE, null);
-		Ticket testTicket11 = new Ticket(1L, "Title", "Author", "Description", "WrongSolution", Status.DONE, null);
-		Ticket testTicket12 = new Ticket(1L, "Title", "Author", "Description", "Solution", null, null);
-		Ticket testTicket13 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.OPEN, null);
+		Ticket testTicket3 = new Ticket(2L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket testTicket4 = new Ticket(1L, null, "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket testTicket5 = new Ticket(1L, "WrongTitle", "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket testTicket6 = new Ticket(1L, "Title", null, "Description", "Solution", Status.DONE, null, null);
+		Ticket testTicket7 = new Ticket(1L, "Title", "WrongAuthor", "Description", "Solution", Status.DONE, null, null);
+		Ticket testTicket8 = new Ticket(1L, "Title", "Author", null, "Solution", Status.DONE, null, null);
+		Ticket testTicket9 = new Ticket(1L, "Title", "Author", "WrongDescription", "Solution", Status.DONE, null, null);
+		Ticket testTicket10 = new Ticket(1L, "Title", "Author", "Description", null, Status.DONE, null, null);
+		Ticket testTicket11 = new Ticket(1L, "Title", "Author", "Description", "WrongSolution", Status.DONE, null, null);
+		Ticket testTicket12 = new Ticket(1L, "Title", "Author", "Description", "Solution", null, null, null);
+		Ticket testTicket13 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.OPEN, null, null);
 		
 		
 		Assertions.assertThat(testTicket1.hashCode())

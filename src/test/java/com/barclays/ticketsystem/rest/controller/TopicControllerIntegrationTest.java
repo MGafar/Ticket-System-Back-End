@@ -16,17 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @Transactional
 @AutoConfigureMockMvc
-class DepartmentControllerIntegrationTest {
+class TopicControllerIntegrationTest {
 
 	@Autowired
 	private MockMvc mvc;
 	
 	@Test
 	void testReadAll()  throws Exception {
-		this.mvc.perform(get("/department/readAll"))
+		this.mvc.perform(get("/topic/readAll"))
 				.andExpect(status().isOk())
-				.andExpect(content().string(containsString("FX")))
-				.andExpect(content().string(containsString("Credit")));
+				.andExpect(content().string(containsString("Remote Connectivity Issues")))
+				.andExpect(content().string(containsString("Messaging Problems")));
 	}
 }
-
