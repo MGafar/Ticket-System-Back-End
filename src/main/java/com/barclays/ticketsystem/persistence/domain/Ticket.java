@@ -57,7 +57,10 @@ public class Ticket {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Department department;
 	
-	public Ticket(long id, String title, String author, String description, String solution, Status status,	Department department) {
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Topic topic;
+	
+	public Ticket(long id, String title, String author, String description, String solution, Status status,	Department department, Topic topic) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -66,6 +69,7 @@ public class Ticket {
 		this.solution = solution;
 		this.status = status;
 		this.department = department;
+		this.topic = topic;
 	}
 
 	public Ticket() {
@@ -81,6 +85,7 @@ public class Ticket {
 					.append(" department: " + department)
 					.append(" solution: " + solution)
 					.append(" status: " + status)
+					.append(" topic: " + topic)
 					.append("]")
 					.toString();
 	}
@@ -181,6 +186,14 @@ public class Ticket {
 
 	public void setDepartment(Department department) {
 		this.department = department;
+	}
+
+	public Topic getTopic() {
+		return topic;
+	}
+
+	public void setTopic(Topic topic) {
+		this.topic = topic;
 	}
 	
 	public Status getStatus() {

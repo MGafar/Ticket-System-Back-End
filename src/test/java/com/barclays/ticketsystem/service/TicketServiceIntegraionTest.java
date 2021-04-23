@@ -16,8 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.barclays.ticketsystem.persistence.domain.Department;
 import com.barclays.ticketsystem.persistence.domain.Status;
 import com.barclays.ticketsystem.persistence.domain.Ticket;
+import com.barclays.ticketsystem.persistence.domain.Topic;
 import com.barclays.ticketsystem.persistence.repository.DepartmentRepository;
 import com.barclays.ticketsystem.persistence.repository.TicketRepository;
+import com.barclays.ticketsystem.persistence.repository.TopicRepository;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Transactional
@@ -31,11 +33,14 @@ class TicketServiceIntegraionTest {
 	
 	@Autowired
 	private TicketRepository ticketRepository;
-		
+
+	@Autowired
+	private TopicRepository topicRepository;
+	
 	@Test
 	void testReadAll() {
-		Ticket ticket1 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
-		Ticket ticket2 = new Ticket(2L, "Title", "Author", "Description", "Solution", Status.DONE, null);
+		Ticket ticket1 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket ticket2 = new Ticket(2L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
 		List<Ticket> toSave = List.of(ticket1, ticket2);	
 		
 		this.ticketRepository.saveAll(toSave);
@@ -44,7 +49,7 @@ class TicketServiceIntegraionTest {
 	
 	@Test
 	void testReadByID() {
-		Ticket ticket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);	
+		Ticket ticket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);	
 		this.ticketRepository.save(ticket);
 		assertThat(this.ticketService.readById(1L)).isEqualTo(ticket);
 	}
@@ -52,17 +57,30 @@ class TicketServiceIntegraionTest {
 	@Test
 	void testReadByDepartment() {
 		Department fx = new Department(1L, "FX");
-		Ticket expectedTicket = new Ticket(2L, "Title", "Author", "Description", "Solution", Status.DONE, fx);;
+		Ticket unexpectedTicket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket expectedTicket = new Ticket(2L, "Title", "Author", "Description", "Solution", Status.DONE, fx, null);
 		List<Ticket> toSave = List.of(expectedTicket);
 		
 		this.departmentRepository.save(fx);
-		this.ticketRepository.saveAll(toSave);
+		this.ticketRepository.saveAll(List.of(expectedTicket, unexpectedTicket));
 		assertThat(this.ticketService.readByDepartment(1L)).isEqualTo(toSave);
+	}
+
+	@Test
+	void testReadByTopic() {
+		Topic topic = new Topic(1L, "Topic");
+		Ticket unexpectedTicket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket expectedTicket = new Ticket(2L, "Title", "Author", "Description", "Solution", Status.DONE, null, topic);
+		List<Ticket> toSave = List.of(expectedTicket);
+		
+		this.topicRepository.save(topic);
+		this.ticketRepository.saveAll(List.of(expectedTicket, unexpectedTicket));
+		assertThat(this.ticketService.readByTopic(1L)).isEqualTo(toSave);
 	}
 	
 	@Test
 	void testCreate() {
-		Ticket ticket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
+		Ticket ticket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
 		this.ticketRepository.save(ticket);
 		assertThat(this.ticketService.create(ticket)).isEqualTo(ticket);
 	}
@@ -70,9 +88,9 @@ class TicketServiceIntegraionTest {
 	@Test
 	@Rollback
 	void testUpdate() {
-		Ticket ticket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null);
+		Ticket ticket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
 		this.ticketRepository.save(ticket);
-		Ticket newVals = new Ticket(1L, "New Title", "New Author", "New Description", "New Solution", Status.OPEN, null);
+		Ticket newVals = new Ticket(1L, "New Title", "New Author", "New Description", "New Solution", Status.OPEN, null, null);
 		this.ticketService.update(1L, newVals);
 		assertThat(this.ticketService.readById(1L)).isEqualTo(newVals);
 	}
