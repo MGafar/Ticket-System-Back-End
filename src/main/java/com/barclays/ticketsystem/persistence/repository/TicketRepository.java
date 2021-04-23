@@ -16,10 +16,12 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
 	@Query(value = "Select * from tickets where department_id = ?", nativeQuery = true)
 	List<Ticket> findByDepartment(Long departmentId);
-	
+
+	@Query(value = "Select * from tickets where topic_id = ?", nativeQuery = true)
+	List<Ticket> findByTopic(Long departmentId);
+
 	@Transactional
 	@Modifying
 	@Query("Update Ticket set status = 'INPROGRESS' where id = :id")
 	void markAsInProgress(@Param(value = "id") long id);
-
 }

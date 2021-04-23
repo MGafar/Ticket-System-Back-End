@@ -32,6 +32,10 @@ public class TicketService {
 		return this.ticketRepository.findByDepartment(id);
 	}
 	
+	public List<Ticket> readByTopic(Long id) {
+		return this.ticketRepository.findByTopic(id);
+	}
+	
 	public Ticket create(Ticket ticket) {
 		return this.ticketRepository.save(ticket);
 	}

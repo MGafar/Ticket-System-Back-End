@@ -16,8 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.barclays.ticketsystem.persistence.domain.Department;
 import com.barclays.ticketsystem.persistence.domain.Status;
 import com.barclays.ticketsystem.persistence.domain.Ticket;
+import com.barclays.ticketsystem.persistence.domain.Topic;
 import com.barclays.ticketsystem.persistence.repository.DepartmentRepository;
 import com.barclays.ticketsystem.persistence.repository.TicketRepository;
+import com.barclays.ticketsystem.persistence.repository.TopicRepository;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Transactional
@@ -31,7 +33,10 @@ class TicketServiceIntegraionTest {
 	
 	@Autowired
 	private TicketRepository ticketRepository;
-		
+
+	@Autowired
+	private TopicRepository topicRepository;
+	
 	@Test
 	void testReadAll() {
 		Ticket ticket1 = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
@@ -59,6 +64,18 @@ class TicketServiceIntegraionTest {
 		this.departmentRepository.save(fx);
 		this.ticketRepository.saveAll(List.of(expectedTicket, unexpectedTicket));
 		assertThat(this.ticketService.readByDepartment(1L)).isEqualTo(toSave);
+	}
+
+	@Test
+	void testReadByTopic() {
+		Topic topic = new Topic(1L, "Topic");
+		Ticket unexpectedTicket = new Ticket(1L, "Title", "Author", "Description", "Solution", Status.DONE, null, null);
+		Ticket expectedTicket = new Ticket(2L, "Title", "Author", "Description", "Solution", Status.DONE, null, topic);
+		List<Ticket> toSave = List.of(expectedTicket);
+		
+		this.topicRepository.save(topic);
+		this.ticketRepository.saveAll(List.of(expectedTicket, unexpectedTicket));
+		assertThat(this.ticketService.readByTopic(1L)).isEqualTo(toSave);
 	}
 	
 	@Test
