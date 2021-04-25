@@ -10,6 +10,9 @@ Please use this invite [link](https://id.atlassian.com/invite/p/jira-software?id
 3.) [Risk Assessment](https://github.com/MGafar/Ticket-System-Back-End/tree/main/Documentation/Risk-Assessment.pdf) - Risk assessment matrix with outlined potential issues and mitigations. <br />
 4.) [Sequence Diagrams](https://github.com/MGafar/Ticket-System-Back-End/tree/main/Documentation/Sequence-Diagrams.pdf) - Sequence diagrams covering CRUD and filtering related functionalities supported by the application. <br />
 
+## Code coverage (96.4%)
+![alt text](https://i.imgur.com/BFVItgy.png)
+
 ## Developer Requirements
 
 * Java 11+
