@@ -1,6 +1,6 @@
 ## Jira Board
 
-Please use this invite [link](https://id.atlassian.com/invite/p/jira-software?id=-vV6klRCR02Txd-e6eCFRg) to access this project's Jira board. The link is valid for 30 days starting 25/04/2021. If you have any issues with access please contact me by [email](mailto:muhamad_gafar@hotmail.com).
+Please use this invite [link](https://id.atlassian.com/invite/p/jira-software?id=IUv1XfkXRcCNX2ZGU1boTA) to access this project's Jira board. The link is valid for 30 days starting 25/04/2021. If you have any issues with access please contact me by [email](mailto:muhamad_gafar@hotmail.com).
 
 ## Detailed Documentation
 
