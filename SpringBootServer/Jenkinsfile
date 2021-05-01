@@ -4,7 +4,7 @@ node {
 
     docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
 
-        def backendImage = docker.build("mgafar/springboot", "./Spring Boot Server/")
+        def backendImage = docker.build("mgafar/springboot", "./SpringBootServer/")
 
         /* Push the container to the custom Registry */
         backendImage.push()
