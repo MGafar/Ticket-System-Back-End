@@ -32,6 +32,3 @@ Please use this invite [link](https://id.atlassian.com/invite/p/jira-software?id
 
 ## Authors
 * **Muhamad Gafar** - *Developer* - [MGafar](https://github.com/MGafar)
-
-## WebHook Test
-Trigger build
