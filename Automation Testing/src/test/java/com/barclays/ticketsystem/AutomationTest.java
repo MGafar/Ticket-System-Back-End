@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.JavascriptExecutor;
@@ -132,6 +134,9 @@ public class AutomationTest {
 		
 		int finalChildTicket = driver.findElements(By.cssSelector(".ticket")).size();
 		
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ticket:nth-child(" + finalChildTicket + ") h2")));
+		
 		assertThat(driver.findElement(By.cssSelector(".ticket:nth-child(" + finalChildTicket + ") h2")).getText(), 
 				is("Title: TitleSelenium"));
 		assertThat(driver.findElement(By.cssSelector(".ticket:nth-child(" + finalChildTicket + ") .ticket-left-column > p")).getText(),
@@ -174,6 +179,9 @@ public class AutomationTest {
 	private void verifyUpdatedTicketInListComponent() {
 		int finalChildTicket = driver.findElements(By.cssSelector(".ticket")).size();
 
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ticket:nth-child(" + finalChildTicket + ") h2")));
+		
 		assertThat(driver.findElement(By.cssSelector(".ticket:nth-child(" + finalChildTicket + ") h2")).getText(),
 				is("Title: TitleSeleniumUpdated"));
 		assertThat(driver.findElement(By.cssSelector(".ticket:nth-child(" + finalChildTicket + ") p:nth-child(2)")).getText(), 
