@@ -132,10 +132,10 @@ public class AutomationTest {
 	
 	private void verifyTicketInListComponent() {
 		
-		int finalChildTicket = driver.findElements(By.cssSelector(".ticket")).size();
-		
 		WebDriverWait wait = new WebDriverWait(driver, 10);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ticket:nth-child(" + finalChildTicket + ") h2")));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ticket:nth-child(" + 1 + ") h2")));
+		
+		int finalChildTicket = driver.findElements(By.cssSelector(".ticket")).size();
 		
 		assertThat(driver.findElement(By.cssSelector(".ticket:nth-child(" + finalChildTicket + ") h2")).getText(), 
 				is("Title: TitleSelenium"));
@@ -177,10 +177,11 @@ public class AutomationTest {
 	}
 	
 	private void verifyUpdatedTicketInListComponent() {
-		int finalChildTicket = driver.findElements(By.cssSelector(".ticket")).size();
-
+		
 		WebDriverWait wait = new WebDriverWait(driver, 10);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ticket:nth-child(" + finalChildTicket + ") h2")));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ticket:nth-child(" + 1 + ") h2")));
+
+		int finalChildTicket = driver.findElements(By.cssSelector(".ticket")).size();
 		
 		assertThat(driver.findElement(By.cssSelector(".ticket:nth-child(" + finalChildTicket + ") h2")).getText(),
 				is("Title: TitleSeleniumUpdated"));
@@ -235,6 +236,9 @@ public class AutomationTest {
 		assertThat(driver.findElement(By.cssSelector(".btn-success")).getText(), is("Mark as Done"));
 		driver.findElement(By.cssSelector(".btn-success")).click();
 
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ticket:nth-child(" + 1 + ") h2")));
+		
 		assertThat(driver.findElement(By.cssSelector(".ticket:nth-child(" + finalChildTicket + ") p:nth-child(3)")).getText(), 
 				is("Solution: SeleniumSolution"));
 	}
